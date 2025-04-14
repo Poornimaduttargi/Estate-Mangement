@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Real Estate System</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+
+  <!-- Navigation Bar -->
+  <header class="navbar">
+    <div class="logo">Online Real Estate</div>
+    <nav>
+      <ul class="nav-links">
+        <li><a href="#">Login</a></li>
+        <li><a href="#">Sign Up</a></li>
+        <li class="right"><a href="#">Home</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <!-- Hero Section -->
+  <section class="hero">
+    <div class="center-content">
+      <h1>Welcome to Real Estate System</h1>
+      <p>Your perfect home is just a click away.</p>
+      <button class="btn" onclick="openPopup('loginPopup')">Login</button>
+      <button class="btn" onclick="openPopup('signupPopup')">Sign Up</button>
+    </div>
+  </section>
+
+  <div id="loginPopup" class="popup">
+    <div class="popup-content">
+      <span class="close" onclick="closePopup('loginPopup')">&times;</span>
+      <h2>Login</h2>
+      <form onsubmit="handleLogin(event)">
+        <input type="text" id="loginUsername" placeholder="Username" required />
+        <input type="password" id="loginPassword" placeholder="Password" required />
+        <label>
+          <input type="checkbox" onclick="togglePassword('loginPassword')"> Show Password
+        </label>
+        <button type="submit" class="form-btn">Login</button>
+      </form>
+    </div>
+  </div>
+  
+  <div id="signupPopup" class="popup">
+    <div class="popup-content">
+      <span class="close" onclick="closePopup('signupPopup')">&times;</span>
+      <h2>Sign Up</h2>
+      <form onsubmit="handleSignup(event)">
+        <input type="text" id="signupUsername" placeholder="Username" required />
+        <input type="email" id="signupEmail" placeholder="Email" required />
+        <input type="password" id="signupPassword" placeholder="Password" required />
+        <label>
+          <input type="checkbox" onclick="togglePassword('signupPassword')"> Show Password
+        </label>
+        <button type="submit" class="form-btn">Sign Up</button>
+      </form>
+      
+    </div>
+  </div>
+
+ <div id="signupPopup" class="popup">
+  <div class="popup-content">
+    <span class="close" onclick="closePopup('signupPopup')">&times;</span>
+    <h2>Sign Up</h2>
+    <form onsubmit="handleSignup(event)">
+      <input type="text" id="signupUsername" placeholder="Username" required />
+      <input type="email" id="signupEmail" placeholder="Email" required />
+      <input type="password" id="signupPassword" placeholder="Password" required />
+      <button type="submit" class="form-btn">Sign Up</button>
+    </form>
+  </div>
+</div>
+
+  <script>
+    function handleSignup(event) {
+      event.preventDefault();
+  
+      const username = document.getElementById("signupUsername").value;
+      const email = document.getElementById("signupEmail").value;
+      const password = document.getElementById("signupPassword").value;
+  
+      const user = { username, email, password };
+  
+      localStorage.setItem("user_" + username, JSON.stringify(user));
+      alert("Signup successful! Please login now.");
+  
+      closePopup('signupPopup');
+      openPopup('loginPopup');
+    }
+  
+    function handleLogin(event) {
+      event.preventDefault();
+  
+      const username = document.getElementById("loginUsername").value;
+      const password = document.getElementById("loginPassword").value;
+  
+      const user = JSON.parse(localStorage.getItem("user_" + username));
+  
+      if (user && user.password === password) {
+        alert("Login successful!");
+        localStorage.setItem("isLoggedIn", "true");
+        window.location.href = "welcome.html";
+      } else {
+        alert("Invalid credentials. Please try again.");
+      }
+    }
+  
+    function openPopup(id) {
+      document.getElementById(id).style.display = "block";
+    }
+  
+    function closePopup(id) {
+      document.getElementById(id).style.display = "none";
+    }
+  
+    window.onclick = function(event) {
+      ['loginPopup', 'signupPopup'].forEach(id => {
+        const popup = document.getElementById(id);
+        if (event.target === popup) {
+          popup.style.display = "none";
+        }
+      });
+    }
+    function togglePassword(id) {
+  const input = document.getElementById(id);
+  input.type = input.type === "password" ? "text" : "password";
+}
+  </script>
+  
+</body>
+</html>

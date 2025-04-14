@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>About Us - Real Estate</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+
+  <header class="navbar">
+    <div class="logo">Real Estate</div>
+    <nav>
+      <ul class="nav-links">
+        <li><a href="welcome.html">Home</a></li>
+        <li><a href="aboutus.html">About Us</a></li>
+        <li><a href="#" onclick="logout()">Logout</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <section class="about-section">
+    <h1>About Us</h1>
+    <p><b>0
+        Welcome to our Real Estate Property Portal — your one-stop destination for finding the perfect home, plot, or investment property in and around Shikrapur and nearby areas. Our mission is to make property searching simple, transparent, and stress-free for everyone.
+      
+      
+      
+        Whether you're looking for a cozy 1RK for rent, a spacious 2BHK, or land to build your dream home, we’ve got you covered. We list verified properties with clear details and photos to help you make smart decisions easily.
+      
+      
+      
+        This portal is developed by a passionate student as part of a real-world project aimed at using web technology to solve local housing needs. We focus on user-friendly design, instant property filtering, and responsive support.
+      
+      
+      
+        Thank you for trusting us in your journey to find the right place — your comfort is our priority!</b>
+      
+    <div class="team-container">
+      <div class="team-member">
+        <p>Payal Divate</p>         
+          <p>Poornima Duttargi</p>  
+            <p>Komal Gadade</p>      
+            <p>Chandana Tikare </p>   
+            <p>Dhanashri Gundal </p>
+        <h3>Prof. Madhuri Arya</h3>
+        <p>Guided by</p>
+      </div>
+    </div>
+  </section>
+
+  <script>
+    function logout() {
+      localStorage.removeItem("isLoggedIn");
+      alert("Logged out successfully.");
+      window.location.href = "Poornima.html";
+    }
+  </script>
+
+</body>
+</html>

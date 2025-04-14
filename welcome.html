@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Property Listings - Real Estate System</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+
+  <header class="navbar">
+    <div class="logo">Real Estate</div>
+    <nav style="flex: 1;">
+      <ul class="nav-links" style="display: flex; align-items: center;">
+        <li><a href="seller.html">For seller</a></li>
+        <li><a href="aboutus.html">aboutus</a></li>
+
+        <!-- Search and Sort Form -->
+        <div class="search-sort-container">
+          <input type="text" id="searchInput" class="search-input" placeholder="Search by name or type" onkeyup="filterProperties()" />
+          <select id="sortSelect" class="sort-select" onchange="sortProperties()">
+            <option value="">Sort By</option>
+            <option value="price">Price (Low to High)</option>
+            <option value="type">Type (1RK, 2BHK, 3BHK)</option>
+          </select>
+        </div>
+
+        <li><a href="#" onclick="logout()">Logout</a></li>
+      </ul>
+    </nav>
+  </header>
+  <!-- Property Listings Section -->
+  <section class="property-section">
+    <h1 class="section-title">🏠 Property Listings</h1>
+    <div class="property-listings">
+     
+      <!-- Villa Card -->
+      <div class="property-listings" style="display: flex; flex-wrap: wrap; justify-content: center;">
+        <!-- Property Card 1 -->
+        <div class="property-card"
+             data-title="1 RK"
+             data-price="₹3,700"
+             data-location="Shikrapur"
+             data-description="Sambhaji Nagar 1 near Shree Ganesh Medical"
+             data-image="img/house1.jpg">
+          <img src="img/house1.jpg" alt="House">
+          <h3>1 RK</h3>
+          <p>₹3,700</p>
+          <p>Shikrapur</p>
+        </div>
+      <!-- Flat Card -->
+      <div class="property-card">
+        <img src="Users\dutta\Downloads.jpg" alt="Flat">
+        <h3>1 Rk</h3>
+        <p>3,500</p>
+        <p>Talegoan Dhamdhere Road</p>
+        <p>Shikrapur </p>
+      </div>
+
+      <!-- Plot Card -->
+      <div class="property-card">
+        <img src="Users\dutta\Downloads.jpg" alt="Plot">
+        <h3>1 Rk</h3>
+        <p>4,500</p>
+        <p>Sanswadi near john deere india pvt.ltd </p>
+        <p>Shikrapur </p>
+      </div>
+
+      
+      <div class="property-card">
+        <img src="Users\dutta\Downloads.jpg" alt="Plot">
+        <h3>1 Rk</h3>
+        <p>3,000</p>
+        <p>Shikrapur rd near by bhagwan kishan store</p>
+        <p>Shikrapur </p>
+      </div>
+      <div class="property-card">
+        <img src="Users\dutta\Downloads.jpg" alt="Plot">
+        <h3>1 Rk</h3>
+        <p>4,000</p>
+        <p>Ecogram</p>
+        <p>Shikrapur </p>
+      </div>
+      <div class="property-card">
+        <img src="Users\dutta\Downloads.jpg" alt="Plot">
+        <h3>1 Rk</h3>
+        <p>4,000</p>
+        <p>near abhisek more complex</p>
+        <p>Shikrapur </p>
+      </div>
+      <div class="property-card">
+        <img src="C:\Users\dutta\Downloads.jpg" alt="Plot">
+        <h3>1 bhk</h3>
+        <p>8,000</p>
+        <p>pabal rd, near abhisek more complex</p>
+        <p>Shikrapur </p>
+      </div>
+      <div class="property-card">
+        <img src="C:\Users\dutta\Downloads.jpg" alt="Plot">
+        <h3>1 Rk</h3>
+        <p>5,000</p>
+        <p>Malthan Phata</p>
+        <p>Shikrapur </p>
+      </div>
+
+    </div>
+    </section>
+    <div id="propertyPopup" class="popup" style="display: none;">
+      <div class="popup-content">
+        <span class="close" onclick="closePopup('propertyPopup')">&times;</span>
+        <img id="popupImage" src="" alt="Property Image" style="width: 100%; max-height: 200px; object-fit: cover;" />
+        <h3 id="popupTitle"></h3>
+        <p id="popupPrice"></p>
+        <p id="popupLocation"></p>
+        <p id="popupDescription"></p>
+      </div>
+    </div>
+    
+
+  <script>
+    const isAuthenticated = !!localStorage.getItem("isLoggedIn");
+    if (!isAuthenticated) {
+      alert("Please log in first.");
+      window.location.href = "Poornima.html";
+    }
+    function logout() {
+      localStorage.removeItem("isLoggedIn");
+      alert("Logged out successfully.");
+      window.location.href = "Poornima.html";
+    }
+    function filterProperties() {
+      const input = document.getElementById("searchInput").value.toLowerCase();
+      const listings = document.querySelectorAll(".property-card");
+      listings.forEach(card => {
+        const name = card.querySelector("h3").innerText.toLowerCase();
+        const type = card.getAttribute("data-type").toLowerCase();
+        if (name.includes(input) || type.includes(input)) {
+          card.style.display = "block";
+        } else {
+          card.style.display = "none";
+        }
+      });
+    }
+
+    // Sort filter
+    function sortProperties() {
+      const sortBy = document.getElementById("sortSelect").value;
+      const container = document.getElementById("propertyListings");
+      const cards = Array.from(container.children);
+
+      let sortedCards;
+      if (sortBy === "price") {
+        sortedCards = cards.sort((a, b) => {
+          return parseInt(a.dataset.price) - parseInt(b.dataset.price);
+        });
+      } else if (sortBy === "type") {
+        sortedCards = cards.sort((a, b) => {
+          return a.dataset.type.localeCompare(b.dataset.type);
+        });
+      } else {
+        return;
+      }
+
+      // Clear and re-add cards in sorted order
+      container.innerHTML = '';
+      sortedCards.forEach(card => container.appendChild(card));
+    }
+    // Show popup with card data
+  document.querySelectorAll('.property-card').forEach(card => {
+  card.addEventListener('click', () => {
+    document.getElementById('popupTitle').innerText = card.getAttribute('data-title');
+    document.getElementById('popupPrice').innerText = card.getAttribute('data-price');
+    document.getElementById('popupLocation').innerText = card.getAttribute('data-location');
+    document.getElementById('popupDescription').innerText = card.getAttribute('data-description');
+    document.getElementById('popupImage').src = card.getAttribute('data-image');
+
+    document.getElementById('propertyPopup').style.display = 'flex';
+  });
+});
+
+function closePopup(id) {
+  document.getElementById(id).style.display = 'none';
+}
+
+   
+
+  </script>
+
+</body>
+</html>
